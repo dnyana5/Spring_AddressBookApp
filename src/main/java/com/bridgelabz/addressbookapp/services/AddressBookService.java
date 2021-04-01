@@ -10,40 +10,45 @@ import com.bridgelabz.addressbookapp.model.AddressBookData;
 
 @Service
 public class AddressBookService implements IAddressBookService{
+	
+	private List<AddressBookData> addressBookList = new ArrayList<>();
 
 	@Override
 	public List<AddressBookData> getAddressBookData() {
-		List<AddressBookData> addressBookList = new ArrayList<>();
-		addressBookList.add(new AddressBookData(1, new AddressBookDTO("Aarti","Gaikwad","9685412563","artig16@gmail.com",
-				"solapur","Maharashtra",413008)));
 		return addressBookList;
 	}
 	
 	@Override
 	public AddressBookData getAddressBookDataById(int perId) {
-		AddressBookData addressBookData = null;
-		addressBookData = new AddressBookData(1,new AddressBookDTO("Aarti","Gaikwad","9685412563","artig16@gmail.com",
-				"solapur","Maharashtra",413008));
-		return addressBookData;
+		  return addressBookList.get(perId-1);
 	}
 
 	@Override
 	public AddressBookData createAddressBookData(AddressBookDTO addBookDTO) {
 		AddressBookData addressBookData = null;
 		addressBookData = new AddressBookData(1,addBookDTO);
+		addressBookList.add(addressBookData);
 		return addressBookData;
 	}
 
 	@Override
 	public AddressBookData updateAddressBookData(int perId, AddressBookDTO addBookDTO) {
-		AddressBookData addressBookData = null;
-		addressBookData = new AddressBookData(perId,addBookDTO);
+		AddressBookData addressBookData = this.getAddressBookDataById(perId);
+		addressBookData.setFirst_name(addBookDTO.first_name); 
+		addressBookData.setLast_name(addBookDTO.last_name);
+		addressBookData.setPhone_number(addBookDTO.phone_number);
+		addressBookData.setEmail(addBookDTO.email);
+		addressBookData.setCity(addBookDTO.city);
+		addressBookData.setState(addBookDTO.state);
+		addressBookData.setZip(addBookDTO.zip);
+		addressBookList.set(perId-1, addressBookData);
 		return addressBookData;
 	}
 
+
 	@Override
 	public void deleteAddressBookData(int perId) {
-		// TODO Auto-generated method stub
+		addressBookList.remove(perId-1);
 		
 	}
 
