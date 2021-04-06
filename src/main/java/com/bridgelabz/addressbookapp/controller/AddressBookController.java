@@ -27,7 +27,7 @@ public class AddressBookController {
 		@Autowired
 		private IAddressBookService addressBookService;
 	
-			//curl localhost:8080/addressbookservice/ -w "\n"
+		
 	@RequestMapping(value = {"","/","/get"})
 	public ResponseEntity<ResponseDTO> getAddressBookData() {
 		List<AddressBookData> addDataList = null;
@@ -38,7 +38,7 @@ public class AddressBookController {
 	
 	
 	
-	 		//curl localhost:8080/addressbookservice/get/1 -w "\n"
+	 	
 	@GetMapping("/get/{perId}")
 	public ResponseEntity<ResponseDTO> getAddressBookData(@PathVariable("perId")int perId) {
 		AddressBookData addressBookData = addressBookService.getAddressBookDataById(perId);
@@ -47,9 +47,7 @@ public class AddressBookController {
 	}
 	
 	
-				//curl -X POST -H "Content-Type: application/json" -d '{"first_name": "Lisa","last_name": "Roy",
-						//"phone_number": 9858742563,"email":"lisaR21@gmail.com","city":"pune",
-						//"state":"Maharashtra","zip":413665}' "http://localhost:8080/addressbookservice/create" -w "\n"
+			
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDTO> addAddressBookData(@RequestBody AddressBookDTO addBookDTO) {
 		AddressBookData addressBookData = addressBookService.createAddressBookData(addBookDTO);
@@ -58,9 +56,6 @@ public class AddressBookController {
 	}
 	
 	
-	 //curl -X PUT -H "Content-Type: application/json" -d '{"first_name": "Rahul","last_name": "Roy",
-						//"phone_number": 8858742563,"email":"RahulR21@gmail.com","city":"pune",
-						//"state":"Maharashtra","zip":413665}' "http://localhost:8080/addressbookservice/update/1" -w "\n"
 	@PutMapping("/update/{perId}")
 	public ResponseEntity<ResponseDTO> updateAddressBookData(
 							@PathVariable("perId") int perId,
@@ -71,7 +66,6 @@ public class AddressBookController {
 	}
 	
 	
-	 		//curl -X DELETE -H "Content-Type: application/json" localhost:8080/addressbookservice/delete/1 -w "\n"
 	@DeleteMapping("/delete/{perId}")
 	public ResponseEntity<ResponseDTO> deleteAddressBookData(@PathVariable("perId") int perId) {
 		addressBookService.deleteAddressBookData(perId);
