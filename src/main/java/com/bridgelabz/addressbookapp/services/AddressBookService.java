@@ -1,6 +1,5 @@
 package com.bridgelabz.addressbookapp.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,44 +17,34 @@ import com.bridgelabz.addressbookapp.repository.AddressBookRepository;
 public class AddressBookService implements IAddressBookService{
 	@Autowired
 	private AddressBookRepository addressRepository;
-	private List<AddressBookData> addressBookList = new ArrayList<>();
-
 
 	public List<AddressBookData> getAddressBookData() {
-		return addressBookList;
+		return addressRepository.findAll();
 	}
 	
 	public AddressBookData getAddressBookDataById(int perId) {
-		return addressBookList.stream()
-		  			.filter(addressBookData -> addressBookData.getPersonId() == perId)
-					.findFirst()
-					.orElseThrow(() -> new AddressBookException("Person Not Found"));
+		return addressRepository
+		  			.findById(perId)
+					.orElseThrow(() -> new AddressBookException("Person with personId"
+					+ perId + "does not exists..!!"));
 	}
 
 	public AddressBookData createAddressBookData(AddressBookDTO addBookDTO) {
 		AddressBookData addressBookData = null;
 		addressBookData = new AddressBookData(addBookDTO);
-		addressBookList.add(addressBookData);
 		log.debug("Add Data: "+addressBookData.toString());
 		return addressRepository.save(addressBookData);
 	}
-
-	public AddressBookData updateAddressBookData(int perId, AddressBookDTO addBookDTO) {
+	
+	public AddressBookData updateAddressBookData(int perId, 
+												AddressBookDTO addBookDTO) {
 		AddressBookData addressBookData = this.getAddressBookDataById(perId);
-		addressBookData.setFirst_name(addBookDTO.first_name); 
-		addressBookData.setLast_name(addBookDTO.last_name);
-		addressBookData.setPhone_number(addBookDTO.phone_number);
-		addressBookData.setEmail(addBookDTO.email);
-		addressBookData.setCity(addBookDTO.city);
-		addressBookData.setState(addBookDTO.state);
-		addressBookData.setZip(addBookDTO.zip);
-		addressBookList.set(perId-1, addressBookData);
-		return addressBookData;
+		addressBookData.updateAddressBookData(addBookDTO); 
+		return addressRepository.save(addressBookData);
 	}
-
 	public void deleteAddressBookData(int perId) {
-		addressBookList.remove(perId-1);
-		
+		AddressBookData addressBookData = this.getAddressBookDataById(perId);
+		addressRepository.delete(addressBookData);
 	}
 
 }

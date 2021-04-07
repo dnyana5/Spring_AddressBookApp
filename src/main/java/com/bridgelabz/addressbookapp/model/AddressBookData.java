@@ -31,7 +31,7 @@ public  @Data class AddressBookData {
 			this.updateAddressBookData(addBookDTO);
 		}
 
-		private void updateAddressBookData(AddressBookDTO addBookDTO) {
+		public void updateAddressBookData(AddressBookDTO addBookDTO) {
 			this.first_name = addBookDTO.first_name;
 			this.last_name = addBookDTO.last_name;
 			this.phone_number = addBookDTO.phone_number;
