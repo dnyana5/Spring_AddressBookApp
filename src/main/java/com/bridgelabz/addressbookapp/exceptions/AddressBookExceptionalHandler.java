@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 
 @ControllerAdvice
-
 public class AddressBookExceptionalHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -27,5 +26,11 @@ public class AddressBookExceptionalHandler {
       return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
 
     }
-
+    @ExceptionHandler(AddressBookException.class)
+    public ResponseEntity<ResponseDTO> handleAddressBookException(
+        AddressBookException exception){
+        ResponseDTO responseDTO = new ResponseDTO("Exception while processing REST Request",
+                                    exception.getMessage());
+        return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
+    }
 }
