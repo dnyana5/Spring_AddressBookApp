@@ -38,8 +38,6 @@ public class AddressBookController {
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
 	
-	
-	
 	 	
 	@GetMapping("/get/{perId}")
 	public ResponseEntity<ResponseDTO> getAddressBookData(@PathVariable("perId")int perId) {
